@@ -136,16 +136,15 @@
                   >Hobbies
                   <div class="form-group d-flex">
                     <div *ngFor="let hobby of hobbies">
-                      <label class="mx-2">
+                      <label class="form-check-label mx-2">
                         <input
                           type="checkbox"
                           id="hobbies"
-                          class="form-control"
-                          name="{{ hobby }}"
-                          [ngModel]="hobby.selected"
-                          #hobby="ngModel"
+                          class="form-control form-check-input"
+                          value="{{ hobby}}"
+                         
                         />
-                        {{ hobby.name }}
+                        {{ hobby }}
                       </label>
                     </div>
                   </div>
