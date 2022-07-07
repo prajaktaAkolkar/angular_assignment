@@ -2,9 +2,9 @@
 .container{
     
     width: 700px;  
-    height: 200px;  
-    padding-top: 50px;  
-    padding-top: 50px;  
+    height: 500px;  
+   
+   
     } 
 .button{
     margin-top: 10px;
@@ -36,5 +36,45 @@
     padding-top: 10px; 
     margin-right: 50px; 
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.text-msg{
+    color: red;
+    margin: 10px;
+  }
+  
+  .example-radio-group {
+      display: flex;
+      flex-direction: column;
+      margin: 15px 0;
+      align-items: flex-start;
+    }
+    
+    .example-radio-button {
+      margin: 5px;
+    }
+    .hobby-section{
+      margin: 15px;;
+    }
+  
+    table, th, td {
+        border: 1px solid;
+        padding: 15px;
+        text-align: left;
+      }
+  
+  
+    .btn{
+      text-align: center;
+      padding: 2px;
+      margin: 5px;
+     
+    }
+    input{
+      margin: 10px 5px 10px 5px;
+    }
+    label{
+      margin: 5px;
+    }
+    h2{
+
+text-align: center;    }
+    

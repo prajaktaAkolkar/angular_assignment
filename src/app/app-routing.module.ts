@@ -11,7 +11,7 @@ const routes: Routes = [
     component: TemplateFormComponent,
      children: [{ path: ':edit/:id', component: ReactiveFormComponent }],
   },
-  {path: 'template', component:MatTemplateComponent},
+  //{path: 'template', component:MatTemplateComponent},
   {path : 'reactive' , component :MatReactiveComponent},
   { path: 'formEdit/:edit/:id', component: MatReactiveComponent },
 ];

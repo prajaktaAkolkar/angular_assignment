@@ -4,6 +4,7 @@ import { RegisterService } from '../register.service';
 import { MatStepperModule } from '@angular/material/stepper';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import {MatDialog} from '@angular/material/dialog';
 @Component({
   selector: 'app-mat-template',
   templateUrl: './mat-template.component.html',
@@ -28,7 +29,7 @@ export class MatTemplateComponent implements OnInit {
   ];
 
   user: object = {
-    userid:this.userDataService.userData.length+1,
+    userid:this.userDataService.jsonData.length+1,
     name: '',
     email: '',
     gender: '',
@@ -45,7 +46,8 @@ export class MatTemplateComponent implements OnInit {
   constructor(
     private userDataService: RegisterService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public dialogRef :MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -64,8 +66,8 @@ export class MatTemplateComponent implements OnInit {
 
   initForm() {
     if (this.editMode) {
-      const newUserData = this.userDataService.getUserData(this.id);
-      const selectedHobby: string[] = newUserData['hobbies'];
+      const newUserData = this.userDataService.getselectedData(this.id);
+      //const selectedHobby: string[] = newUserData['hobbies'];
       this.user['hobby'] = newUserData['hobby'];
       this.user['name'] = newUserData['name'];
       this.user['email'] = newUserData['email'];
@@ -121,6 +123,11 @@ export class MatTemplateComponent implements OnInit {
       this.userDataService.updateData(this.id, this.user)
     }
     this.router.navigate(['/listing'], { relativeTo: this.route });
+    this.onCloseDialog();
+  }
+
+  onCloseDialog(){
+    this.dialogRef.closeAll();
   }
 
 }

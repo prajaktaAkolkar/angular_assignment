@@ -1,14 +1,14 @@
 <div class="container">
   <div class="row">
     <div>
-      <h2 style="text-align: center">Reactive Form</h2>
+      <h2>Reactive Form</h2>
       <form [formGroup]="regForm" (ngSubmit)="onSubmit()">
         <mat-horizontal-stepper>
           <mat-step label="Step 1">
-            <span *ngIf="
+            <!-- <span *ngIf="
                 regForm.get('step1').touched &&
                 !regForm.get('step1').valid
-              " class="help-block">Please Fill All the Details!</span>
+              " class="text-msg">Please Fill All the Details!</span> -->
             <div id="user-data" formGroupName="step1">
               <div class="form-group">
                 <label for="username">Name</label>
@@ -16,7 +16,7 @@
                 <span *ngIf="
                     regForm.get('step1.name').touched &&
                     regForm.get('step1.name').hasError('required')
-                  " class="help-block">Please Enter Name!</span>
+                  " class="text-msg">Please Enter Name!</span>
               </div>
               <div class="form-group">
                 <label for="email">Mail</label>
@@ -24,15 +24,15 @@
                 <span *ngIf="
                     regForm.get('step1.email').touched &&
                     regForm.get('step1.email').hasError('required')
-                  " class="help-block">Email is required!</span>
+                  " class="text-msg">Email is required!</span>
                 <span *ngIf="
                     regForm.touched &&
                     regForm.get('step1.email').hasError('email')
-                  " class="help-block">Please Enter a Valid Email!</span>
+                  " class="text-msg">Please Enter a Valid Email!</span>
               </div>
               <div class="form-group">
-                Gender
-                <div class="radio" *ngFor="let gender of genders">
+                Gender :
+                <div class="radio form-check form-check-inline" *ngFor="let gender of genders">
                   <label for="gender">
                     <input type="radio" value="{{ gender }}" formControlName="gender" />
                     {{ gender }}
@@ -40,7 +40,7 @@
                   <span *ngIf="
                       regForm.get('step1.gender').touched &&
                       regForm.get('step1.gender').hasError('required')
-                    " class="help-block">Please Select Gender!</span>
+                    " class="text-msg">Please Select Gender!</span>
                 </div>
               </div>
               <div class="form-group">
@@ -49,7 +49,7 @@
                 <span *ngIf="
                     regForm.get('step1.dob').touched &&
                     regForm.get('step1.dob').hasError('required')
-                  " class="help-block">Please enter dob!</span>
+                  " class="text-msg">Please enter dob!</span>
               </div>
               <button mat-button matStepperNext [disabled]="!regForm.get('step1').valid" type="button"
                 class="btn btn-primary">
@@ -58,10 +58,10 @@
             </div>
           </mat-step>
           <mat-step label="Step 2">
-            <span *ngIf="
+            <!-- <span *ngIf="
                 regForm.get('step2').touched &&
                 !regForm.get('step2').valid
-              " class="help-block">Please Enter All Values!</span>
+              " class="text-msg">Please Enter All Values!</span> -->
             <div id="user-data" formGroupName="step2">
               <div class="form-group" *ngIf="!editMode">
                 <label for="profilePic">Profile Image</label>
@@ -69,27 +69,27 @@
                 <span *ngIf="
                     regForm.get('step2.dp').touched &&
                     regForm.get('step2.dp').hasError('required')
-                  " class="help-block">Please Enter pic!</span>
+                  " class="text-msg">Please Enter pic!</span>
               </div>
               <div class="form-group">
-                <label for="hobby">Hobbies
-                  <div class="form-group d-flex">
+                <label for="hobby">Hobbies : </label>
+                  <div class="form-group">
                     <div class="form-check form-check-inline" *ngFor="let hobby of hobbies; let i = index"
                       formArrayName="hobbies">
-                      <label class="form-check-label mx-2">
-                        <input type="checkbox" id="hobbies" class="form-control form-check-input"
-                          value="{{ hobby.name }}" (change)="getSelectedHobby($event)" [checked]="hobby.selected" />
+                      <input type="checkbox" id="hobbies" class="form-control form-check-input" value="{{ hobby}}"
+                        (change)="getSelectedHobby($event)" [checked]="hobby.selected" />
+                      <label class="form-check form-check-inline">
                         {{ hobby }}
                       </label>
                     </div>
                   </div>
-                </label>
+                
               </div>
               <div class="form-group">
                 <label for="Phone">Mobile Number</label>
                 <input type="tel" id="number" class="form-control" formControlName="phoneNum"
                   placeholder="123-456-7890" />
-                <span *ngIf="regForm.get('step2.phoneNum').touched" class="help-block">{{
+                <span *ngIf="regForm.get('step2.phoneNum').touched" class="text-msg">{{
                   regForm.get("step2.phoneNum").hasError("pattern")
                   ? "Number should be in format:-123-456-7890"
                   : ""
@@ -110,10 +110,10 @@
             </button>
           </mat-step>
           <mat-step label="Step 3">
-            <span *ngIf="
+            <!-- <span *ngIf="
                 regForm.get('step3').touched &&
                 !regForm.get('step3').valid
-              " class="help-block">Please Enter All Values!</span>
+              " class="text-msg">Please fill All Details!</span> -->
             <div id="user-data" formGroupName="step3">
               <div class="form-group">
                 <label for="Qualification">Qualification</label>
@@ -125,7 +125,7 @@
                     regForm
                       .get('step3.qualification')
                       .hasError('required')
-                  " class="help-block">
+                  " class="text-msg">
                   Please Select Qualification
                 </span>
               </div>
@@ -142,7 +142,7 @@
                 <span *ngIf="
                     regForm.get('step3.profession').touched &&
                     regForm.get('step3.profession').hasError('required')
-                  " class="help-block">Please select profession
+                  " class="text-msg">Please select profession
                 </span>
               </div>
               <div class="form-group">
@@ -154,7 +154,7 @@
                       regForm
                         .get('step3.description')
                         .hasError('required')
-                    " class="help-block">
+                    " class="text-msg">
                     Description is required
                   </span>
                 </div>
@@ -171,8 +171,8 @@
                           ? 'name is required'
                           : ''
                       }}" />
-                  </div>
-                  <div>
+                    <!-- </div>
+                  <div> -->
                     <label for="phoneNumber" class="mx-3">Phone Number</label>
                     <input type="tel" id="contactNumber" formControlName="number" placeholder="{{
                         regForm
@@ -182,13 +182,11 @@
                           ? 'number is required'
                           : 'format:-123-456-7890'
                       }}" />
-                  </div>
-                  <div>
-                    <button style="margin: -4px 0px 0px 8px" type="button" class="btn btn-danger"
-                      (click)="onRemoveContacts(i)" *ngIf="i >=1"> Remove </button>
-                    <button type="button" class="btn btn-success my-2" (click)="onAddContacts()">
-                      Add One
-                    </button>
+                    <div>
+                      <button style="margin: -4px 0px 0px 8px" type="button" class="btn btn-danger"
+                        (click)="onRemoveContacts(i)" *ngIf="i >=1"> Remove </button>
+                      <button type="button" class="btn btn-info" (click)="onAddContacts()">Add One</button>
+                    </div>
                   </div>
                 </div>
 
@@ -198,7 +196,7 @@
               <button mat-button matStepperPrevious class="btn btn-primary" type="button">
                 Back
               </button>
-              <button [disabled]="!regForm.valid" class="btn btn-primary mx-3" type="submit">
+              <button [disabled]="!regForm.valid" class="btn btn-primary" type="submit">
                 {{ !editMode ? "Submit" : "update" }}
               </button>
             </div>

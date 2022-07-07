@@ -4,6 +4,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Subscription } from 'rxjs';
 import { RegisterService } from '../register.service';
+import {MatDialog} from '@angular/material/dialog';
+
 import empData from '../data.json';
 export interface PeriodicElement {
   name: string;
@@ -41,7 +43,7 @@ export class MatReactiveComponent implements OnInit {
   contact: [] = [];
 
   user: object = {
-    userid: this.DataService.userData.length,
+    userid: this.regServiceData.jsonData.length,
     name: '',
     email: '',
     gender: '',
@@ -56,9 +58,10 @@ export class MatReactiveComponent implements OnInit {
   };
 
   constructor(
-    private DataService: RegisterService,
+    private regServiceData: RegisterService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public dialogRef :MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -77,19 +80,19 @@ export class MatReactiveComponent implements OnInit {
 
   initForm() {
     if (this.editMode) {
-      const newUserData = this.DataService.getUserData(this.id);
-      const selectedHobby: string[] = newUserData['hobbies'];
-      this.fetchSelectedHobby(selectedHobby);
-      this.user['name'] = newUserData['name'];
-      this.user['email'] = newUserData['email'];
-      this.user['gender'] = newUserData['gender'];
-      this.user['dob'] = newUserData['dob'];
-      this.user['phoneNum'] = newUserData['phoneNum'];
-      this.user['qualification'] = newUserData['qualification'];
-      this.user['profession'] = newUserData['profession'];
-      this.user['description'] = newUserData['description'];
-      if (newUserData['contacts']) {
-        for (let info of newUserData['contacts']) {
+      const newData = this.regServiceData.getselectedData(this.id);
+      //const selectedHobby: string[] = newData['hobbies'];
+     // this.fetchSelectedHobby(selectedHobby);
+      this.user['name'] = newData['name'];
+      this.user['email'] = newData['email'];
+      this.user['gender'] = newData['gender'];
+      this.user['dob'] = newData['dob'];
+      this.user['phoneNum'] = newData['phoneNum'];
+      this.user['qualification'] = newData['qualification'];
+      this.user['profession'] = newData['profession'];
+      this.user['description'] = newData['description'];
+      if (newData['contacts']) {
+        for (let info of newData['contacts']) {
           this.user['contacts'].push(
             new FormGroup({
               name: new FormControl(info.name, Validators.required),
@@ -192,7 +195,6 @@ export class MatReactiveComponent implements OnInit {
       let i: number = 0;
       this.selectedHobby.controls.forEach((ctrl: FormControl) => {
         if (ctrl.value == event.target.value) {
-          // Remove the unselected element from the arrayForm
           this.selectedHobby.removeAt(i);
           return;
         }
@@ -225,7 +227,6 @@ export class MatReactiveComponent implements OnInit {
   }
 
   get controls() {
-    // a getter!
     return (<FormArray>this.regForm.get('step3.contacts')).controls;
   }
 
@@ -247,12 +248,19 @@ export class MatReactiveComponent implements OnInit {
     this.user['contacts'] = this.regForm.value.step3.contacts;
 
     if (!this.editMode) {
-      this.user['userid'] = this.DataService.userData.length + 1;
-      this.DataService.addData(this.user);
+      this.user['userid'] = this.regServiceData.jsonData.length + 1;
+      this.regServiceData.addData(this.user);
+      console.log(this.regForm.value);
     } else {
-      this.DataService.updateData(this.id, this.user);
+      this.regServiceData.updateData(this.id, this.user);
     }
     this.router.navigate(['/listing'], { relativeTo: this.route });
+    this.onCloseDialog();
+  }
+
+
+  onCloseDialog(){
+    this.dialogRef.closeAll();
   }
   }
   

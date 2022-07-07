@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class RegisterService {
-  userData: {}[] = [
+  jsonData: {}[] = [
     {
       id: 1,
       name: 'ABC',
@@ -75,26 +75,26 @@ export class RegisterService {
   constructor() {}
   dataUpdated = new Subject<{}[]>();
   getData() {
-    return this.userData.slice();
-    console.log(this.userData);
+    return this.jsonData.slice();
+    console.log(this.jsonData);
     
   }
 
-  getUserData(id: number) {
-    return this.userData[id];
+  getselectedData(id: number) {
+    return this.jsonData[id];
   }
-  addData(newUserInfo: object) {
-    this.userData.push(newUserInfo);
+  addData(newValue: any) {
+    this.jsonData.push(newValue);
   }
 
   updateData(index: number, newUserData: object) {
-    this.userData[index] = newUserData;
-    this.dataUpdated.next(this.userData.slice());
+    this.jsonData[index] = newUserData;
+    this.dataUpdated.next(this.jsonData.slice());
   }
 
   deleteData(index: number) {
-    this.userData.splice(index, 1);
-    this.dataUpdated.next(this.userData.slice());
+    this.jsonData.splice(index, 1);
+    this.dataUpdated.next(this.jsonData.slice());
   }
 
   activatedEmitter = new Subject<boolean>();
