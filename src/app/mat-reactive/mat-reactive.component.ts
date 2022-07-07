@@ -62,7 +62,7 @@ export class MatReactiveComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dropdownList = ['MCA', 'BCA', 'B.tech', 'M.tech', 'B.Com'];
+    this.dropdownList = ['MCS', 'BCS', 'M.Pharm', 'B.Pharm', 'Diploma'];
     this.dropdownSettings = {
       idField: 'item_id',
       textField: 'item_text',
@@ -185,15 +185,11 @@ export class MatReactiveComponent implements OnInit {
 
   getSelectedHobby(event: any) {
     this.selectedHobby = this.regForm.get('step2.hobbies') as FormArray;
-    /* Selected */
     if (event.target.checked) {
       // Add a new control in the arrayForm
       this.selectedHobby.push(new FormControl(event.target.value));
     } else {
-      /* unselected */
-      // find the unselected element
       let i: number = 0;
-
       this.selectedHobby.controls.forEach((ctrl: FormControl) => {
         if (ctrl.value == event.target.value) {
           // Remove the unselected element from the arrayForm

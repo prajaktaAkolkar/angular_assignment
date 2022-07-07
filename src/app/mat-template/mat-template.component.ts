@@ -120,7 +120,7 @@ export class MatTemplateComponent implements OnInit {
     } else {
       this.userDataService.updateData(this.id, this.user)
     }
-    this.router.navigate(['/home'], { relativeTo: this.route });
+    this.router.navigate(['/listing'], { relativeTo: this.route });
   }
 
 }
