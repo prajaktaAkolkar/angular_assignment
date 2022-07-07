@@ -253,6 +253,7 @@
                   </span>
                 </div>
               </div>
+              <!-- <div class="form-group">
               <label for="Contact">Contact Person</label>
               <div
                 class="form-group d-flex flex-wrap"
@@ -267,11 +268,7 @@
                     [(ngModel)]="list.name"
                     required
                     #contactName="ngModel"
-                    [placeholder]="
-                      !contactName.valid && contactName.touched
-                        ? ' Contact Name is required'
-                        : 'You can add more'
-                    "
+                   
                   />
                 </div>
                 <div>
@@ -284,11 +281,7 @@
                     required
                     #contactNumber="ngModel"
                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                    [placeholder]="
-                      contactNumber.touched
-                        ? 'Contact Number is required'
-                        : 'format-123-456-7890'
-                    "
+                    
                   />
                 </div>
                 <div>
@@ -309,6 +302,7 @@
               >
                 Add One
               </button>
+            </div> -->
             </div>
             <div>
               <button
