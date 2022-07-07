@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "ABC",
+    "email":"abc@gmail.com",
+    "gender": "male",
+    "dob": "2010-08-09",
+    "profile": "",
+    "hobbies": "singing",
+    "phoneNum": "123-456-7890",
+    "qualification": ["MCA", "BCA"],
+    "profession": "Software Engineer",
+    "description":"Eneter Description here",
+    "contacts": [
+      {
+        "name": "Asha",
+        "number": "123-456-7890"      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Daksh",
+    "email":"daksh@gmail.com",
+    "gender": "male",
+    "dob": "2000-12-09",
+    "profile": "",
+    "hobbies": "singing",
+    "phoneNum": "123-456-7890",
+    "qualification": ["MCA", "BCA"],
+    "profession": "Software Engineer",
+    "description":"Eneter Description here",
+    "contacts": [
+      {
+        "name": "Nayra",
+        "number": "123-456-7890"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Ridhesh",
+    "email":"ridh@gmail.com",
+    "gender": "male",
+    "dob": "1999-08-09",
+    "profile": "",
+    "hobbies": "singing",
+    "phoneNum": "123-456-7890",
+    "qualification": ["MCA", "BCA"],
+    "profession": "Software Engineer",
+    "description":"Eneter Description here",
+    "contacts": [
+      {
+        "name": "Asha",
+        "number": "123-456-7890"
+      },
+      {
+        "name": "Reena",
+        "number": "123-456-7890"
+      }
+    ]
+  }
+]

@@ -1,0 +1,30 @@
+.example-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+    align-items: flex-start;
+  }
+  
+  .example-radio-button {
+    margin: 5px;
+  }
+  .hobby-section{
+    margin: 15px;;
+  }
+
+table{
+  width: 100%;
+}
+
+  table, th, td {
+    border: 1px solid;
+    padding: 15px;
+    text-align: left;
+   
+  }
+  .btn{
+    text-align: center;
+    padding: 15px;
+    margin: 10px;
+  }
+  
