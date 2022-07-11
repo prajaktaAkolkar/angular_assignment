@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
@@ -31,8 +31,25 @@ export class MatReactiveComponent implements OnInit {
   dropdownList: string[] = [];
   dropdownSettings: IDropdownSettings = {};
   genders: string[] = ['male', 'female'];
-  hobbies: any = ['Singing','Dancing','Playing']
-   
+ // hobbies: any = ['Singing','Dancing','Playing']
+ hobbies: any = [
+  {
+    id: 1,
+    name: 'Reading',
+    selected: false,
+  },
+  {
+    id: 2,
+    name: 'Cooking',
+    selected: false,
+  },
+  {
+    id: 3,
+    name: 'Playing',
+    selected: false,
+  },
+];
+   hobbyFlag :boolean = false;
   
   profession: string[] = [
     'Software Engineer',
@@ -57,13 +74,17 @@ export class MatReactiveComponent implements OnInit {
     description: '',
     contacts: [],
   };
-
+  addhobby: boolean;
+  hobbys: any;
+  hobbyValue: any;
+  add: number;
   constructor(
     private regServiceData: RegisterService,
     private router: Router,
     private route: ActivatedRoute,
     public dialogRef :MatDialog,
-    private dialog  :MatDialog
+    private dialog  :MatDialog,
+    private cdRef: ChangeDetectorRef
   ) {}
 
 
@@ -94,8 +115,8 @@ export class MatReactiveComponent implements OnInit {
   initForm() {
     if (this.editMode) {
       const newData = this.regServiceData.getselectedData(this.id);
-      //const selectedHobby: string[] = newData['hobbies'];
-     // this.fetchSelectedHobby(selectedHobby);
+      const selectedHobby: string[] = newData['hobbies'];
+      this.fetchSelectedHobby(selectedHobby);
       this.user['name'] = newData['name'];
       this.user['email'] = newData['email'];
       this.user['gender'] = newData['gender'];
@@ -199,34 +220,53 @@ export class MatReactiveComponent implements OnInit {
     }
   }
 
-  getSelectedHobby(event: any) {
-    this.selectedHobby = this.regForm.get('step2.hobbies') as FormArray;
-    if (event.target.checked) {
-      // Add a new control in the arrayForm
-      this.selectedHobby.push(new FormControl(event.target.value));
-    } else {
-      let i: number = 0;
-      this.selectedHobby.controls.forEach((ctrl: FormControl) => {
-        if (ctrl.value == event.target.value) {
-          this.selectedHobby.removeAt(i);
-          return;
-        }
-        i++;
+  addHobby()
+{
+  console.log("add hobby clicked");
+   this.hobbyFlag = true;
+  console.log(this.hobbyFlag);
+
+}
+
+getSelectedHobby(event: any) {
+  this.selectedHobby = this.regForm.get('step2.hobbies') as FormArray;
+  if (event.target.checked) {
+   
+    this.selectedHobby.push(new FormControl(event.target.value));
+  } else {
+    let i: number = 0;
+
+    this.selectedHobby.controls.forEach((ctrl: FormControl) => {
+      if (ctrl.value == event.target.value) {
+        this.selectedHobby.removeAt(i);
+        return;
+      }
+      i++;
+    });
+  }
+}
+
+fetchSelectedHobby(selectedHobby: string[]) {
+  const hobbyName = [];
+  for (let hobby of selectedHobby) {
+    for (let staticHobby of this.hobbies) {
+      hobbyName.push(staticHobby['name']);
+      if (hobby == staticHobby['name']) {
+        staticHobby['selected'] = true;
+        this.selectedHobby.push(new FormControl(staticHobby['name']));
+      }
+    }
+    const uniqueHobbyName = [...new Set(hobbyName)];
+    if (uniqueHobbyName.includes(hobby) == false) {
+      this.selectedHobby.push(new FormControl(hobby));
+      this.hobbies.push({
+        id: this.hobbies.length + 1,
+        name: hobby,
+        selected: true,
       });
     }
   }
-
-  fetchSelectedHobby(selectedHobby: string[]) {
-    for (let sel of selectedHobby) {
-      for (let fet of this.hobbies) {
-        if (sel == fet['name']) {
-          fet['selected'] = true;
-          this.selectedHobby.push(new FormControl(fet['name']));
-        }
-      }
-    }
-  }
-
+}
   onAddContacts() {
     (<FormArray>this.regForm.get('step3.contacts')).push(
       new FormGroup({
@@ -238,11 +278,35 @@ export class MatReactiveComponent implements OnInit {
       })
     );
   }
+ 
+  hobbyAdded(){
+    return this.addhobby = true;
+  
+   }
+   newhobby() {
+    console.log("click it");
+    
+   }
 
+   hobbyAddByUser(){  
+    console.log(this.hobbyValue);
+    
+    this.hobbies.push({id: this.hobbies.length + 1,
+          name: this.hobbyValue,
+          selected: false,}); 
+    this.addhobby =false;
+   }
+
+   getInputHobby(event: Event){
+
+    this.hobbyValue = (<HTMLInputElement>event.target).value;
+
+   }
+ 
   get controls() {
     return (<FormArray>this.regForm.get('step3.contacts')).controls;
   }
-
+  
   onRemoveContacts(index: number) {
     (<FormArray>this.regForm.get('step3.contacts')).removeAt(index);
   }

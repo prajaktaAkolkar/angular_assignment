@@ -23,6 +23,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatTableModule} from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatDialogModule} from '@angular/material/dialog';
+import { HobbiesComponent } from './hobbies/hobbies.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +32,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatTemplateComponent,
     MatReactiveComponent,
   ReactiveFormComponent,
+  HobbiesComponent,
   
   ],
   imports: [

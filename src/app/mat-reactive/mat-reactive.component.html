@@ -1,9 +1,8 @@
-
 <div class="container">
   <div class="row">
     <div>
-      <h2>Reactive Form  <button class="mat-btn" mat-button mat-dialog-close >X</button> </h2>
-    
+      <h2>Reactive Form <button class="mat-btn" mat-button mat-dialog-close>X</button> </h2>
+
       <form [formGroup]="regForm" (ngSubmit)="onSubmit()">
         <mat-horizontal-stepper>
           <mat-step label="Step 1">
@@ -73,19 +72,40 @@
                     regForm.get('step2.dp').hasError('required')
                   " class="text-msg">Select Profile Image</span>
               </div>
+             
+             
               <div class="form-group">
-                <label for="hobby">Hobbies : </label>
-                  <div class="form-group">
-                    <div class="form-check form-check-inline" *ngFor="let hobby of hobbies; let i = index"
-                      formArrayName="hobbies">
-                      <input type="checkbox" id="hobbies" class="form-control form-check-input" value="{{ hobby}}"
-                        (change)="getSelectedHobby($event)" [checked]="hobby.selected" />
-                      <label class="form-check form-check-inline">
-                        {{ hobby }}
+                <label for="hobby"
+                  >Hobbies
+                  <div class="form-group d-flex">
+                    <div
+                      *ngFor="let hobby of hobbies; let i = index"
+                      formArrayName="hobbies"
+                    >
+                      <label class="mx-3 form-check-label">
+                        <input
+                          type="checkbox"
+                          id="hobbies"
+                          class="form-check-input"
+                          value="{{ hobby.name }}"
+                          (change)="getSelectedHobby($event)"
+                          [checked]="hobby.selected"
+                        />
+                        {{ hobby.name }}
                       </label>
                     </div>
+                    <div >
+                      <button type="button" class="btn btn-default" (click)="hobbyAdded()" ><b>+</b></button>
+                      <div *ngIf="addhobby">
+                       <input type="text" (input)="getInputHobby($event)" placeholder="enter the hobby">
+                      
+                       <button type="button" class="btn btn-primary" (click)="hobbyAddByUser()">Add</button>
+                    </div>
+                    </div>
+                   
                   </div>
-                
+                </label>
+               
               </div>
               <div class="form-group">
                 <label for="Phone">Mobile Number</label>
