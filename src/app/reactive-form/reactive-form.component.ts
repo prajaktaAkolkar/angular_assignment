@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { MatReactiveComponent } from '../mat-reactive/mat-reactive.component';
+import { MatTemplateComponent } from '../mat-template/mat-template.component';
 
 @Component({
   selector: 'app-reactive-form',
@@ -11,7 +14,19 @@ export class ReactiveFormComponent implements OnInit {
   dropdownSettings:IDropdownSettings={};
   form = 0;
   
-  constructor() { }
+  constructor(private dialog  :MatDialog) { }
+
+
+
+  onCreateTem(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus=true;
+    this.dialog.open(MatTemplateComponent,dialogConfig);
+    }
+    onCreateReact(){
+      this.dialog.open(MatReactiveComponent);
+    }
+
 
   ngOnInit(): void {
     this.dropdownList = [

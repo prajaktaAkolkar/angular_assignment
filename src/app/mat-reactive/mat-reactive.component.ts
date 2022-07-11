@@ -5,8 +5,9 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Subscription } from 'rxjs';
 import { RegisterService } from '../register.service';
 import {MatDialog} from '@angular/material/dialog';
-
+import {MatDialogConfig} from '@angular/material/dialog';
 import empData from '../data.json';
+import { MatTemplateComponent } from '../mat-template/mat-template.component';
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -61,8 +62,20 @@ export class MatReactiveComponent implements OnInit {
     private regServiceData: RegisterService,
     private router: Router,
     private route: ActivatedRoute,
-    public dialogRef :MatDialog
+    public dialogRef :MatDialog,
+    private dialog  :MatDialog
   ) {}
+
+
+
+  onCreateTem(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus=true;
+    this.dialog.open(MatTemplateComponent,dialogConfig);
+    }
+    onCreateReact(){
+      this.dialog.open(MatReactiveComponent);
+    }
 
   ngOnInit(): void {
     this.dropdownList = ['MCS', 'BCS', 'M.Pharm', 'B.Pharm', 'Diploma'];

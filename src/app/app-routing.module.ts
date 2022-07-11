@@ -6,11 +6,10 @@ import {ReactiveFormComponent} from './reactive-form/reactive-form.component';
 import { MatTemplateComponent } from './mat-template/mat-template.component';
 import { MatReactiveComponent } from './mat-reactive/mat-reactive.component';
 const routes: Routes = [
+  {path:'',component:ReactiveFormComponent},
   {
     path: 'listing',
-    component: TemplateFormComponent,
-     children: [{ path: ':edit/:id', component: ReactiveFormComponent }],
-  },
+    component: TemplateFormComponent },
   //{path: 'template', component:MatTemplateComponent},
   {path : 'reactive' , component :MatReactiveComponent},
   { path: 'formEdit/:edit/:id', component: MatReactiveComponent },

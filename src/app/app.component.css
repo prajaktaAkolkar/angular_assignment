@@ -1,0 +1,18 @@
+.navbar{
+    align-items: center;
+}
+
+li{
+    align-items:center;
+    margin:20px 10px 20px 10px;
+    align-content: center;
+}
+
+.btn{
+   
+    align-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    margin: 10px;
+}

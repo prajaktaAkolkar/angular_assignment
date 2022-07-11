@@ -1,137 +1,15 @@
-<div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="text-center">
-            <h1>Registration Form</h1>
-          </div>
-          <form>
-            <div class="form1" *ngIf="form == 0">
-            <div class="mb-3">
-              <label for="name" class="form-label">Name</label>
-              <input type="name" class="form-control" id="name" name="name" placeholder="XYZ">
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" name="emai" placeholder="name@example.com">
-            </div>
-            <div class="mb3">
-              <label for="gender" class="form-label"> Gender : </label>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="female" id="female">
-              <label class="form-check-label" for="female">
-                Female
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="male" id="male" checked>
-              <label class="form-check-label" for="flexRadioDefault2">
-               Male
-              </label>
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">DOB</label> 
-                   <input type="date">
-          </div>
-         
-            <div class="mb-3 next-btn">
-              <button class="btn btn-primary" type="button" (click)="next()">Next</button>
-            </div>
-          </div>
-          <div class="form2" id="form2" *ngIf="form==1">
-            <div class="mb-3">
-              <label for="name" class="form-label">Profile Pic</label>
-              <input type="file" class="form-control" id="Profile" name="profile">
-            </div>
-            <div class="mb-3" name="hobbies">
-              <label for="hobbies" class="form-label"> Hobbies : </label>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="hobby1" value="hobby1">
-                <label class="form-check-label" for="hobby1">Reading</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="hobby2" value="hobby2">
-                <label class="form-check-label" for="hobby2">Cooking</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="hobby3" value="hobby3">
-                <label class="form-check-label" for="hobby3">Singing</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="hobby3" value="hobby3">
-                <label class="form-check-label" for="hobby3">Playing</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="hobby3" value="hobby3">
-                <label class="form-check-label" for="hobby3">Traveling</label>
-              </div>
-            </div>
-            <div class="mb-3">
-              <label for="name" class="form-label">Phone number</label>
-              <input type="text" class="form-control" id="phone" name="phone">
-            </div>
-            <div class="btn-form2 mb-3">
-              <button class="btn btn-primary " type="button" (click)="previous()">Back</button>
-              <button class="btn btn-primary" type="button" (click)="next()">Next</button>
-            </div>
-          </div>
-          <div class="form3" id="form3" *ngIf="form==2">
-            <div class="mb-3">
-              <label for="Qualification" class="form-label"> Qualification : </label>
-              <ng-multiselect-dropdown 
-          [settings]="dropdownSettings"
-          [data]="dropdownList">
-            </ng-multiselect-dropdown>
-            </div>
-           
-            <div class="mb-3" name="hobbies">
-              <label for="hobbies" class="form-label"> Hobbies : </label>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="hobby1" value="hobby1">
-                <label class="form-check-label" for="hobby1">Reading</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="hobby2" value="hobby2">
-                <label class="form-check-label" for="hobby2">Cooking</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="hobby3" value="hobby3">
-                <label class="form-check-label" for="hobby3">Singing</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="hobby3" value="hobby3">
-                <label class="form-check-label" for="hobby3">Playing</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="hobby3" value="hobby3">
-                <label class="form-check-label" for="hobby3">Traveling</label>
-              </div>
-            </div>
-            <div class="mb3">
-              <label class="form-check-label" for="profession">Profession</label>
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
-                <option value="1">Software-Engineer</option>
-                <option value="2">Civil Engineer</option>
-                <option value="3">Accountant</option>
-                <option value="3">Sr. Software Engineer</option>
-                <option value="3">Manager</option>
-                <option value="3">Tester</option>
-  
-  
-              </select>
-            </div>
-           
-            <div class="btn-form2 mb-3">
-              <button class="btn btn-primary " type="button" (click)="previous()">Back</button>
-           
-              <button class="btn btn-success " type="button" >Submit</button>
-              
-            </div>
-          </div>
-          </form> 
-        </div>
-      </div>
-    </div>
-  </div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+      <!-- <a class="nav-link active" routerLink="template">Template Form</a> -->
+      <button class="btn btn-primary" (click)="onCreateTem()">Template</button>
+    </li>
+    <li class="nav-item">
+      <!-- <a class="nav-link active" routerLink="reactive">Reactive Form</a> -->
+      <button class="btn btn-primary" (click)="onCreateReact()">Reactive</button>
+    </li>
+   
+    
+  </ul>
+</nav>

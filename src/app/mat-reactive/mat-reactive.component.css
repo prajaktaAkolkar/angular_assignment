@@ -2,7 +2,9 @@
   color: red;
   margin: 10px;
 }
-
+.mat-btn{
+  margin-left: auto;
+}
 .example-radio-group {
     display: flex;
     flex-direction: column;
