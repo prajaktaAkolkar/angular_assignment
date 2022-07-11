@@ -13,10 +13,10 @@ export class RegisterService {
       gender: 'male',
       dob: '2010-08-09',
       profile: '',
-      hobbies: 'singing',
+      hobbies:['singing', 'dancing'],
       phoneNum: '123-456-7890',
       qualification: ['MCA', 'BCA'],
-      profession: 'software Engineer',
+      profession: 'Software Engineer',
       description: 'text description',
       contacts: [
         {
@@ -32,7 +32,7 @@ export class RegisterService {
       gender: 'female',
       dob: '1990-06-09',
       profile: '',
-      hobbies: 'dancing',
+      hobbies: ['dancing'],
       phoneNum: '123-456-7890',
       qualification: ['MCS', 'BCA'],
       profession: 'Manager',
@@ -55,10 +55,10 @@ export class RegisterService {
       gender: 'male',
       dob: '2020-04-20',
       profile: '',
-      hobbies: 'Playing',
+      hobbies:[ 'Playing'],
       phoneNum: '123-456-7890',
       qualification: ['10th', '12th'],
-      profession: 'student',
+      profession: 'Civil Engineer',
       description: 'description',
       contacts: [
         {

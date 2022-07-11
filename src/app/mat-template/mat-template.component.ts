@@ -4,7 +4,7 @@ import { RegisterService } from '../register.service';
 import { MatStepperModule } from '@angular/material/stepper';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-mat-template',
   templateUrl: './mat-template.component.html',
@@ -18,8 +18,31 @@ export class MatTemplateComponent implements OnInit {
   dropdownList: string[] = [];
   dropdownSettings: IDropdownSettings = {};
   genders: any[] = ['male', 'female'];
-  hobbies: any = ['Traveling','Singing','Cooking','Playing','Reading'];
-  profession: string[] = ['Software Engineer','Civil Engineer','Buisness','Teacher'];
+  // hobbies: any = ['Traveling', 'Singing', 'Cooking', 'Playing', 'Reading'];
+  hobbies: any = [
+    {
+      id: 1,
+      name: 'Reading',
+      selected: false,
+    },
+    {
+      id: 2,
+      name: 'Cooking',
+      selected: false,
+    },
+    {
+      id: 3,
+      name: 'Playing',
+      selected: false,
+    },
+  ];
+  profession: string[] = [
+    'Software Engineer',
+    'Manager',
+    'Self-Employee',
+    'Civil Engineer',
+    'Buisness',
+  ];
   contact: any = [
     {
       id: 1,
@@ -29,7 +52,7 @@ export class MatTemplateComponent implements OnInit {
   ];
 
   user: object = {
-    userid:this.userDataService.jsonData.length+1,
+    userid: this.userDataService.jsonData.length + 1,
     name: '',
     email: '',
     gender: '',
@@ -40,15 +63,15 @@ export class MatTemplateComponent implements OnInit {
     qualification: [],
     profession: '',
     description: '',
-    contacts: [] ,
+    contacts: [],
   };
 
   constructor(
     private userDataService: RegisterService,
     private router: Router,
     private route: ActivatedRoute,
-    public dialogRef :MatDialog
-  ) {}
+    public dialogRef: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.dropdownList = ['MCA', 'BCA', 'B.tech', 'M.tech', 'B.Com'];
@@ -67,7 +90,7 @@ export class MatTemplateComponent implements OnInit {
   initForm() {
     if (this.editMode) {
       const newUserData = this.userDataService.getselectedData(this.id);
-      //const selectedHobby: string[] = newUserData['hobbies'];
+      const selectedHobby: string[] = newUserData['hobbies'];
       this.user['hobby'] = newUserData['hobby'];
       this.user['name'] = newUserData['name'];
       this.user['email'] = newUserData['email'];
@@ -126,7 +149,7 @@ export class MatTemplateComponent implements OnInit {
     this.onCloseDialog();
   }
 
-  onCloseDialog(){
+  onCloseDialog() {
     this.dialogRef.closeAll();
   }
 

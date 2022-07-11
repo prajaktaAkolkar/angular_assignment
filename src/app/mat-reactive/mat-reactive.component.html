@@ -72,40 +72,29 @@
                     regForm.get('step2.dp').hasError('required')
                   " class="text-msg">Select Profile Image</span>
               </div>
-             
-             
               <div class="form-group">
-                <label for="hobby"
-                  >Hobbies
+                <label for="hobby">Hobbies
                   <div class="form-group d-flex">
-                    <div
-                      *ngFor="let hobby of hobbies; let i = index"
-                      formArrayName="hobbies"
-                    >
-                      <label class="mx-3 form-check-label">
-                        <input
-                          type="checkbox"
-                          id="hobbies"
-                          class="form-check-input"
-                          value="{{ hobby.name }}"
-                          (change)="getSelectedHobby($event)"
-                          [checked]="hobby.selected"
-                        />
-                        {{ hobby.name }}
-                      </label>
-                    </div>
-                    <div >
-                      <button type="button" class="btn btn-default" (click)="hobbyAdded()" ><b>+</b></button>
+                    <div *ngFor="let hobby of hobbies; let i = index" formArrayName="hobbies">
+                     
+                      <input type="checkbox" id="hobbies" class="form-check-input" value="{{ hobby.name }}"
+                        (change)="getSelectedHobby($event)" [checked]="hobby.selected" />
+                        <label class="mx-3 form-check-label">
+                          {{ hobby.name }}
+                        </label>
+                      </div>
+                    <div *ngIf="editMode">
+                      <button type="button" class="btn btn-default" (click)="hobbyAdded()"><b>+</b></button>
                       <div *ngIf="addhobby">
-                       <input type="text" (input)="getInputHobby($event)" placeholder="enter the hobby">
-                      
-                       <button type="button" class="btn btn-primary" (click)="hobbyAddByUser()">Add</button>
+                        <input type="text" (input)="getInputHobby($event)" placeholder="enter the hobby">
+
+                        <button type="button" class="btn btn-primary" (click)="hobbyAddByUser()">Add</button>
+                      </div>
                     </div>
-                    </div>
-                   
+
                   </div>
                 </label>
-               
+
               </div>
               <div class="form-group">
                 <label for="Phone">Mobile Number</label>
