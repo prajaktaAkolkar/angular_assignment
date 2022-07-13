@@ -13,10 +13,11 @@ import { MatTemplateComponent } from '../mat-template/mat-template.component';
   styleUrls: ['./template-form.component.css']
 })
 export class TemplateFormComponent implements OnInit {
-  usersData = [];
+  usersData:any = [];
   subscription: Subscription;
   editMode: boolean = false;
   dataJ = dataJsb;
+  isFetching :boolean = false
   router: any;
   constructor(
     public regservice: RegisterService,
@@ -30,20 +31,43 @@ export class TemplateFormComponent implements OnInit {
       this.usersData = data;
 
     });
-    this.usersData = this.regservice.getData();
-    console.log( this.usersData);
+    this.isFetching=true;
+    this.subscription = this.regservice.getData().subscribe((data) => {
+      this.usersData = data;
+      this.isFetching = false;
+    });
   }
   onCreateTem(index :number){
   //  this.dialog.open(MatTemplateComponent);
   //const TemplateFormComponent =this.router.navigate(['/formEdit/:edit/:index'], { relativeTo: this.route });
     this.dialog.open(MatTemplateComponent);
     }
-  onDelete(index: number) {
-    this.regservice.deleteData(index);
+  onDelete(userId: string) {
+   // this.regservice.deleteData(index);
     //this.dataJ.splice((index), 1);
+     this.isFetching = true;
+     this.regservice.deleteData(userId).subscribe(()=>{
+      this.regservice.getData().subscribe((data)=>{
+        this.usersData = data;
+        this.isFetching =false;
+      })
+     })
+
     console.log("deleted");
   }
   ngOnDestroy(): void {
-    // this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }
+// onDelete(userId: string) {
+//   this.loading = true;
+//   this.userservice.deleteData(userId).subscribe(() => {
+//     this.userservice.getData().subscribe((data) => {
+//       this.usersData = data;
+//       this.loading = false;
+//     });
+//   });
+// }
+// ngOnDestroy(): void {
+//   this.subscription.unsubscribe();
+// }

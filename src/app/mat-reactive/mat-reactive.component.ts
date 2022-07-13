@@ -8,6 +8,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatDialogConfig} from '@angular/material/dialog';
 import empData from '../data.json';
 import { MatTemplateComponent } from '../mat-template/mat-template.component';
+import { Post } from '../post.model';
+import { response } from 'express';
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -25,7 +27,7 @@ export interface PeriodicElement {
 export class MatReactiveComponent implements OnInit {
   regForm: FormGroup;
   editMode: boolean = false;
-  id: number;
+  userId: any;
   selectedHobby: any = [];
   subscription: Subscription;
   dropdownList: string[] = [];
@@ -60,8 +62,8 @@ export class MatReactiveComponent implements OnInit {
   ];
   contact: [] = [];
 
-  user: object = {
-    userid: this.regServiceData.jsonData.length,
+  user: Post = {
+   
     name: '',
     email: '',
     gender: '',
@@ -106,7 +108,7 @@ export class MatReactiveComponent implements OnInit {
       enableCheckAll: false,
     };
     this.route.params.subscribe((params: Params) => {
-      this.id = +params['id'];
+      this.userId = +params['id'];
       this.editMode = params['id'] != null;
       this.initForm();
     });
@@ -114,7 +116,7 @@ export class MatReactiveComponent implements OnInit {
 
   initForm() {
     if (this.editMode) {
-      const newData = this.regServiceData.getselectedData(this.id);
+      const newData = this.regServiceData.getselectedData(this.userId );
       const selectedHobby: string[] = newData['hobbies'];
       this.fetchSelectedHobby(selectedHobby);
       this.user['name'] = newData['name'];
@@ -312,6 +314,7 @@ fetchSelectedHobby(selectedHobby: string[]) {
   }
 
   onSubmit() {
+ 
     this.user['name'] = this.regForm.value.step1.name;
     this.user['email'] = this.regForm.value.step1.email;
     this.user['gender'] = this.regForm.value.step1.gender;
@@ -325,12 +328,15 @@ fetchSelectedHobby(selectedHobby: string[]) {
     this.user['contacts'] = this.regForm.value.step3.contacts;
 
     if (!this.editMode) {
-      this.user['userid'] = this.regServiceData.jsonData.length + 1;
+      //this.user['userid'] = this.regServiceData.addData.length + 1;
       this.regServiceData.addData(this.user);
       console.log(this.regForm.value);
     } else {
-      this.regServiceData.updateData(this.id, this.user);
+      this.regServiceData.updateData(this.userId , this.user).subscribe(response=>{
+        console.log(response)
+      });
     }
+    this.regServiceData.getData().subscribe();
     this.router.navigate(['/listing'], { relativeTo: this.route });
     this.onCloseDialog();
   }

@@ -5,6 +5,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { MatDialog } from '@angular/material/dialog';
+import { Post } from '../post.model';
 @Component({
   selector: 'app-mat-template',
   templateUrl: './mat-template.component.html',
@@ -14,28 +15,28 @@ export class MatTemplateComponent implements OnInit {
 
   @ViewChild('form') signUpForm: NgForm;
   editMode: boolean = false;
-  id: number;
+  id: any;
   dropdownList: string[] = [];
   dropdownSettings: IDropdownSettings = {};
   genders: any[] = ['male', 'female'];
   // hobbies: any = ['Traveling', 'Singing', 'Cooking', 'Playing', 'Reading'];
   hobbies: any = [
-    {
-      id: 1,
-      name: 'Reading',
-      selected: false,
-    },
-    {
-      id: 2,
-      name: 'Cooking',
-      selected: false,
-    },
-    {
-      id: 3,
-      name: 'Playing',
-      selected: false,
-    },
-  ];
+  {
+    id: 1,
+    name: 'Reading',
+    selected: false,
+  },
+  {
+    id: 2,
+    name: 'Cooking',
+    selected: false,
+  },
+  {
+    id: 3,
+    name: 'Playing',
+    selected: false,
+  },
+];
   profession: string[] = [
     'Software Engineer',
     'Manager',
@@ -51,13 +52,13 @@ export class MatTemplateComponent implements OnInit {
     },
   ];
 
-  user: object = {
-    userid: this.userDataService.jsonData.length + 1,
+  user: Post = {
+   
     name: '',
     email: '',
     gender: '',
     dob: '',
-    profile: '',
+    dp: '',
     hobbies: [],
     phoneNum: '',
     qualification: [],
@@ -90,7 +91,7 @@ export class MatTemplateComponent implements OnInit {
   initForm() {
     if (this.editMode) {
       const newUserData = this.userDataService.getselectedData(this.id);
-      const selectedHobby: string[] = newUserData['hobbies'];
+      //const selectedHobby: string[] = newUserData['hobbies'];
       this.user['hobby'] = newUserData['hobby'];
       this.user['name'] = newUserData['name'];
       this.user['email'] = newUserData['email'];
@@ -137,13 +138,14 @@ export class MatTemplateComponent implements OnInit {
     this.contact.splice(index, 1);
   }
   onSubmit() {
-    this.user['hobbies'] = this.getSelectedHobby();
+    // this.user['hobbies'] = this.getSelectedHobby();
     this.user['contacts'] = this.contact
     if (!this.editMode) {
       this.user['userid'] = this.user['userid']++;
       this.userDataService.addData(this.user);
     } else {
-      this.userDataService.updateData(this.id, this.user)
+      this.userDataService.updateData(this.id, this.user);
+
     }
     this.router.navigate(['/listing'], { relativeTo: this.route });
     this.onCloseDialog();

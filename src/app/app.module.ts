@@ -24,6 +24,7 @@ import {MatTableModule} from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatDialogModule} from '@angular/material/dialog';
 import { HobbiesComponent } from './hobbies/hobbies.component';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +54,8 @@ import { HobbiesComponent } from './hobbies/hobbies.component';
    MatSelectModule,
    MatTableModule,
    MatToolbarModule,
-   MatDialogModule
+   MatDialogModule,
+   HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -13,7 +13,7 @@ const routes: Routes = [
     component: TemplateFormComponent },
   //{path: 'template', component:MatTemplateComponent},
   {path : 'reactive' , component :MatReactiveComponent},
-  { path: 'formEdit/:edit/:id', component: MatReactiveComponent }
+  { path: 'formEdit/edit/:id', component: MatReactiveComponent }
   
 ];
 
