@@ -25,6 +25,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatDialogModule} from '@angular/material/dialog';
 import { HobbiesComponent } from './hobbies/hobbies.component';
 import { HttpClientModule } from '@angular/common/http';
+import { StaticDataModel } from './post.model';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,7 +58,7 @@ import { HttpClientModule } from '@angular/common/http';
    MatDialogModule,
    HttpClientModule
   ],
-  providers: [],
+  providers: [StaticDataModel],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

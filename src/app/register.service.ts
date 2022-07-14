@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { response } from 'express';
 import { map } from 'rxjs';
 import { Post } from './post.model';
@@ -99,13 +99,32 @@ export class RegisterService {
 
   getselectedData(userid: string) {
   //  return this.jsonData[id];
-   return this.http.get("https://angular-assignment-forms-default-rtdb.firebaseio.com/userData/"+
-   userid +
-   ".json").subscribe(response=>{
+   return this.http.get("https://angular-assignment-forms-default-rtdb.firebaseio.com/userData.json?", 
+   {
+    params:new HttpParams().set('id', userid)
+   } 
+   ).subscribe(response=>{
     console.log(response);
     
    })
   }
+
+  getUserData(userId: string) {
+    return this.http
+      .get<Post>(
+        "https://angular-assignment-forms-default-rtdb.firebaseio.com/userData/" +
+          userId +
+          ".json"
+      )
+      .pipe(
+        map((responseData) => {
+          let specificUser: Post;
+          specificUser = responseData;
+          return specificUser;
+        })
+      );
+  }
+
   addData(newValue: Post) {
     // this.jsonData.push(newValue);
     this.http

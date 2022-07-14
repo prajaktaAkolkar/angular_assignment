@@ -1,41 +1,43 @@
 <div class="container">
   <div class="row">
     <div>
-      <h2>Template Driven Form   <button class="mat-btn" mat-button mat-dialog-close >X</button> </h2>
+      <h2>Template Driven Form <button class="mat-btn" mat-button mat-dialog-close>X</button> </h2>
       <form (ngSubmit)="onSubmit()" #form="ngForm">
         <mat-horizontal-stepper>
           <mat-step label="Step 1">
-            <span class="text-msg" *ngIf="!userDataOne.valid && userDataOne.touched">Please Enter All Details!</span>
-            <div id="user-data" ngModelGroup="userDataOne" #userDataOne="ngModelGroup">
+             <div id="user-data" ngModelGroup="userDataOne" #userDataOne="ngModelGroup">
               <div class="form-group">
                 <label for="username">Name</label>
                 <input type="text" id="username" class="form-control" name="username" [(ngModel)]="user['name']"
                   #username="ngModel" required />
-                <span class="text-msg" *ngIf="!username.valid && username.touched">Please Enter Username!</span>
+                <span class="help-block" *ngIf="!username.valid && username.touched">Please Enter NAME!</span>
               </div>
               <div class="form-group">
                 <label for="email">Mail</label>
                 <input type="email" id="email" class="form-control" name="email" [(ngModel)]="user['email']" required
                   email #email="ngModel" />
-                <span class="text-msg" *ngIf="!email.valid && email.touched">Email is required!</span>
-                <span class="text-msg" *ngIf="!email.valid && email.touched">Please Enter a Valid Email!</span>
+                <span class="help-block" *ngIf="!email.valid && email.touched && email.errors.required">Email is
+                  required!</span>
+                <span class="help-block" *ngIf="!email.valid && email.touched && email.errors.email">Please Enter a
+                  Valid Email!</span>
               </div>
               <div class="form-group">
-                Gender
-                <div class="radio" *ngFor="let gender of genders">
-                  <label for="gender">
-                    <input type="radio" name="gender" value="{{ gender }}" [(ngModel)]="user['gender']" required
-                      #gender="ngModel" />
+                Gender :
+                <div class="form-check form-check-inline" *ngFor="let gender of genders; let i = index">
+                  <label class="form-check-label">
+                    <input type="radio" name="gender" class="form-check-input" value="{{ gender }}"
+                      [(ngModel)]="user['gender']" required #gender="ngModel" />
                     {{ gender }}
                   </label>
-                  <span class="text-msg" *ngIf="!gender.valid && gender.touched">Please Select Gender!</span>
+                  <span class="help-block" *ngIf="!gender.valid && gender.touched">Please Select Gender!</span>
                 </div>
               </div>
               <div class="form-group">
-                <label for="dob">DOB</label>
-                <input type="date" id="dateOfBirth" class="form-control" name="dob" [(ngModel)]="user['dob']"
-                  #dob="ngModel" required />
-                <span class="text-msg" *ngIf="!dob.valid && dob.touched">Please Enter dob!</span>
+                <label for="dob">DOB:
+                  <input type="date" id="dateOfBirth" class="form-control" name="dob" [(ngModel)]="user['dob']"
+                    #dob="ngModel" required >
+              </label>
+                <span class="help-block" *ngIf="!dob.valid && dob.touched">Please Enter dob!</span>
               </div>
               <div>
                 <button mat-button matStepperNext [disabled]="!userDataOne.valid" type="button" class="btn btn-primary">
@@ -45,25 +47,39 @@
             </div>
           </mat-step>
           <mat-step label="Step 2">
-            <span class="text-msg" *ngIf="!userDataTwo.valid && userDataTwo.touched">Please Enter All values!</span>
-            <div id="user-data" ngModelGroup="userDataTwo" #userDataTwo="ngModelGroup">
+             <div id="user-data" ngModelGroup="userDataTwo" #userDataTwo="ngModelGroup">
               <div class="form-group" *ngIf="!editMode">
-                <label for="profilePic">Image</label>
-                <input type="file" id="profilePic" class="form-control" name="pic" [(ngModel)]="user['profile']"
+                <label for="profilePic">Profile Pic :</label>
+                <input type="file" id="profilePic" class="form-control" name="pic" [(ngModel)]="user['dp']"
                   #pic="ngModel" required style="border: none" />
-                <span class="text-msg" *ngIf="!pic.valid && pic.touched">Please Enter pic!</span>
+                <span class="help-block" *ngIf="!pic.valid && pic.touched">Please Enter pic!</span>
               </div>
               <div class="form-group">
-                <label for="hobby">Hobbies
+                <label for="hobby">Hobbies : </label>
                   <div class="form-group d-flex">
                     <div *ngFor="let hobby of hobbies">
-                      <label class="form-check-label mx-2">
-                        <input type="checkbox" id="hobbies" class="form-control form-check-input" value="{{ hobby.name}}" />
+                      <label class="mx-3 form-check-label">
+                        <input type="checkbox" id="hobbies" class="form-check-input" name="{{ hobby.id }}"
+                          [ngModel]="hobby.selected" #hobby="ngModel" />
                         {{ hobby.name }}
                       </label>
                     </div>
+                    <button type="button" class="btn btn-primary" style="padding: 0px 8px 0px 8px;"
+                      (click)="addHobbies()">
+                      +
+                    </button>
                   </div>
-                </label>
+                
+                <div *ngIf="add == 1">
+                  <input type="text" name="newHobbie" ngModel #newHobby="ngModel" required />
+                  <button [disabled]="!newHobby.valid" type="button" class="mx-2 btn btn-success"
+                    (click)="pushHobby(newHobby.value)">
+                    +
+                  </button>
+                  <button type="button" class="mx-2 btn btn-danger" (click)="add = 0">
+                    X
+                  </button>
+                </div>
               </div>
               <div class="form-group">
                 <label for="Phone">Mobile Number</label>
@@ -82,15 +98,13 @@
             </button>
           </mat-step>
           <mat-step label="Step 3">
-            <span class="text-msg" *ngIf="!userDataThree.valid && userDataThree.touched">Please Enter All
-              values!</span>
-            <div id="user-data" ngModelGroup="userDataThree" #userDataThree="ngModelGroup">
+             <div id="user-data" ngModelGroup="userDataThree" #userDataThree="ngModelGroup">
               <div class="form-group">
                 <label for="Qualification">Qualification</label>
                 <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="dropdownList"
                   [(ngModel)]="user['qualification']" name="qualification" required #qualification="ngModel">
                 </ng-multiselect-dropdown>
-                <span class="text-msg" *ngIf="!qualification.valid && qualification.touched">
+                <span class="help-block" *ngIf="!qualification.valid && qualification.touched">
                   Please Select Qualification
                 </span>
               </div>
@@ -98,53 +112,36 @@
                 <label for="profession">Profession</label>
                 <select class="form-control dropdown" id="occupation" name="occupation" [(ngModel)]="user['profession']"
                   required #prof="ngModel">
-                  <option value="" selected="selected" disabled="disabled">
-                    -- select one --
+                  <option value="" selected="selected" disabled="disabled" aria-placeholder="Select One">
                   </option>
                   <option *ngFor="let item of profession" value="{{ item }}">
                     {{ item }}
                   </option>
                 </select>
-                <span class="text-msg" *ngIf="!prof.valid && prof.touched">Please select profession
+                <span class="help-block" *ngIf="!prof.valid && prof.touched">Please select profession
                 </span>
               </div>
               <div class="form-group">
-                <label for="Description">Description</label>
+                <label for="Description">Description : </label>
                 <div>
-                  <textarea name="description" class="form-control" rows="4" cols="40" [(ngModel)]="user['description']"
+                  <textarea name="description" class="form-control" rows="4" cols="20" [(ngModel)]="user['description']"
                     required #desc="ngModel"></textarea>
-                  <span class="text-msg" *ngIf="!desc.valid && desc.touched">
+                  <span class="help-block" *ngIf="!desc.valid && desc.touched">
                     Description is required
                   </span>
                 </div>
               </div>
 
-              <div class="form-group" >
-                <label for="Contact">Contact Person</label>
-                <div class=" d-flex flex-wrap" *ngFor="let list of contact; let i = index"
-                  >
+              <div class="form-group">
+                <label for="Contact">Contact Person: </label>
+                <div class=" d-flex flex-wrap" *ngFor="let list of contact; let i = index">
                   <div>
                     <label for="name" class="mx-3">Name</label>
-                    <input
-                    type="text"
-                    name="contactName{{ i }}"
-                    id="contactName"
-                    [(ngModel)]="list.name"
-                    required
-                    #contactName="ngModel"
-                   
-                  />
-                    <!-- <input type="text"  name="contactName{{ i }}"
-                    id="contactName"  required [(ngModel)]="list.name"
-                    required
-                    #contactName="ngModel"> -->
-                    <!-- </div>
-                  <div> -->
+                    <input type="text" name="contactName{{ i }}" id="contactName" [(ngModel)]="list.name" required
+                      #contactName="ngModel" />
                     <label for="contactNumber" class="mx-3">Phone Number</label>
-                    <input type="tel" name="contactNumber{{ i }}"
-                    id="contactNumber"  [(ngModel)]="list.contactNumber"
-                    required
-                    #contactName="ngModel"/>
+                    <input type="tel" name="contactNumber{{ i }}" id="contactNumber" [(ngModel)]="list.number" required
+                      #contactNumber="ngModel" />
                     <div>
                       <button style="margin: -4px 0px 0px 8px" type="button" class="btn btn-danger"
                         (click)="onRemoveContacts(i)" *ngIf="i >=1"> Remove </button>
@@ -154,63 +151,13 @@
                 </div>
 
               </div>
-              <!-- <div class="form-group">
-              <label for="Contact">Contact Person</label>
-              <div
-                class="form-group d-flex flex-wrap"
-                *ngFor="let list of contact; let i = index"
-              >
-                <div>
-                  <label for="name" class="mx-3">Name</label>
-                  <input
-                    type="text"
-                    name="contactName{{ i }}"
-                    id="contactName"
-                    [(ngModel)]="list.name"
-                    required
-                    #contactName="ngModel"
-                   
-                  />
-                </div>
-                <div>
-                  <label for="phoneNumber" class="mx-3">Phone Number</label>
-                  <input
-                    type="tel"
-                    name="contactNumber{{ i }}"
-                    id="contactNumber"
-                    [(ngModel)]="list.number"
-                    required
-                    #contactNumber="ngModel"
-                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                    
-                  />
-                </div>
-                <div>
-                  <button
-                    style="margin: -4px 0px 0px 8px"
-                    type="button"
-                    class="btn btn-danger"
-                    (click)="onRemoveContacts(i)"
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
-              <button
-                type="button"
-                class="btn btn-success my-2"
-                (click)="onAddContacts()"
-              >
-                Add One
-              </button>
-            </div> -->
-            </div>
+             </div>
             <div>
               <button mat-button matStepperPrevious class="btn btn-primary" type="button">
                 Back
               </button>
 
-              <button [disabled]="form.invalid" class="btn btn-primary mx-3" type="submit">
+              <button [disabled]="form.invalid" class="btn btn-primary mx-3" type="submit" (click)="onCloseDialog()">
                 {{ !editMode ? "Submit" : "update" }}
               </button>
             </div>

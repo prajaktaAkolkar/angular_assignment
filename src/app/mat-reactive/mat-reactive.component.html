@@ -1,55 +1,52 @@
 <div class="container">
   <div class="row">
     <div>
-      <h2>Reactive Form <button class="mat-btn" mat-button mat-dialog-close>X</button> </h2>
-      <form [formGroup]="regForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="regForm" *ngIf="regForm" (ngSubmit)="onSubmit()">
+        <h2>Reactive Form <button class="mat-btn" mat-button mat-dialog-close>X</button> </h2>
         <mat-horizontal-stepper>
           <mat-step label="Step 1">
-            <!-- <span *ngIf="
-                regForm.get('step1').touched &&
-                !regForm.get('step1').valid
-              " class="text-msg">Please Fill All the Details!</span> -->
             <div id="user-data" formGroupName="step1">
               <div class="form-group">
-                <label for="username">Name</label>
+                <label for="username">Name : </label>
                 <input type="text" id="username" class="form-control" formControlName="name" />
                 <span *ngIf="
                     regForm.get('step1.name').touched &&
                     regForm.get('step1.name').hasError('required')
-                  " class="text-msg">Please Enter Name!</span>
+                  " class="help-block">Please Enter Name!</span>
               </div>
               <div class="form-group">
-                <label for="email">Mail</label>
+                <label for="email">Email :</label>
                 <input type="email" id="email" class="form-control" formControlName="email" />
                 <span *ngIf="
                     regForm.get('step1.email').touched &&
                     regForm.get('step1.email').hasError('required')
-                  " class="text-msg">Email is required!</span>
+                  " class="help-block">Email is required!</span>
                 <span *ngIf="
                     regForm.touched &&
                     regForm.get('step1.email').hasError('email')
-                  " class="text-msg">Please Enter a Valid Email!</span>
+                  " class="help-block">Please Enter a Valid Email!</span>
               </div>
               <div class="form-group">
-                Gender :
-                <div class="radio form-check form-check-inline" *ngFor="let gender of genders">
-                  <label for="gender">
-                    <input type="radio" value="{{ gender }}" formControlName="gender" />
+                Gender : 
+                <div class="form-check form-check-inline" *ngFor="let gender of genders; let i = index">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="radio" value="{{ gender }}" formControlName="gender" />
                     {{ gender }}
                   </label>
                   <span *ngIf="
                       regForm.get('step1.gender').touched &&
                       regForm.get('step1.gender').hasError('required')
-                    " class="text-msg">Please Select Gender!</span>
+                    " class="help-block">Please Select Gender!</span>
                 </div>
               </div>
               <div class="form-group">
-                <label for="dob">DOB</label>
-                <input type="date" id="dateOfBirth" class="form-control" formControlName="dob" />
+                <label for="dob">DOB
+                  <input type="date" id="dateOfBirth" class="form-control" formControlName="dob" />
+                </label>
                 <span *ngIf="
                     regForm.get('step1.dob').touched &&
                     regForm.get('step1.dob').hasError('required')
-                  " class="text-msg">Please enter dob!</span>
+                  " class="help-block">Please enter dob!</span>
               </div>
               <button mat-button matStepperNext [disabled]="!regForm.get('step1').valid" type="button"
                 class="btn btn-primary">
@@ -57,56 +54,58 @@
               </button>
             </div>
           </mat-step>
-          <mat-step label="Step 2">
-            <!-- <span *ngIf="
-                regForm.get('step2').touched &&
-                !regForm.get('step2').valid
-              " class="text-msg">Please Enter All Values!</span> -->
-            <div id="user-data" formGroupName="step2">
+          <mat-step label="Step2">
+
+            <div id="user-data" formGroupName="Step2">
               <div class="form-group" *ngIf="!editMode">
                 <label for="profilePic">Profile Image</label>
                 <input type="file" id="profilePic" class="form-control" formControlName="dp" />
                 <span *ngIf="
-                    regForm.get('step2.dp').touched &&
-                    regForm.get('step2.dp').hasError('required')
-                  " class="text-msg">Select Profile Image</span>
+                    regForm.get('Step2.dp').touched &&
+                    regForm.get('Step2.dp').hasError('required')
+                  " class="help-block">Please Enter pic!</span>
               </div>
               <div class="form-group">
-                <label for="hobby">Hobbies
+                <label for="hobby">Hobby :
                   <div class="form-group d-flex">
                     <div *ngFor="let hobby of hobbies; let i = index" formArrayName="hobbies">
-                     
-                      <input type="checkbox" id="hobbies" class="form-check-input" value="{{ hobby.name }}"
-                        (change)="getSelectedHobby($event)" [checked]="hobby.selected" />
-                        <label class="mx-3 form-check-label">
-                          {{ hobby.name }}
-                        </label>
-                      </div>
-                    <div *ngIf="editMode">
-                      <button type="button" class="btn btn-default" (click)="hobbyAdded()"><b>+</b></button>
-                      <div *ngIf="addhobby">
-                        <input type="text" (input)="getInputHobby($event)" placeholder="enter the hobby">
-
-                        <button type="button" class="btn btn-primary" (click)="hobbyAddByUser()">Add</button>
-                      </div>
+                      <label class="mx-3 form-check-label">
+                        <input type="checkbox" id="hobbies" class="form-control form-check-input"
+                          value="{{ hobby.name }}" (change)="getSelectedHobby($event)" [checked]="hobby.selected" />
+                        {{ hobby.name }}
+                      </label>
                     </div>
-
+                    <button type="button" class="btn btn-primary" style="padding: 0px 8px 0px 8px;"
+                      (click)="addHobbies()">
+                      +
+                    </button>
                   </div>
                 </label>
-
+                <div *ngIf="add == 1">
+                  <input type="text" formControlName="newHobby" />
+                  <button [disabled]="!regForm.get('Step2.newHobby').valid" type="button" class="mx-2 btn btn-success"
+                    (click)="pushHobby()">
+                    +
+                  </button>
+                  <button type="button" class="mx-2 btn btn-danger" (click)="onCancel()">
+                    X
+                  </button>
+                </div>
               </div>
               <div class="form-group">
                 <label for="Phone">Mobile Number</label>
-                <input type="tel" id="number" class="form-control" formControlName="phoneNum"
-                  placeholder="123-456-7890" />
-                <span *ngIf="regForm.get('step2.phoneNum').touched" class="text-msg">{{
-                  regForm.get("step2.phoneNum").hasError("pattern")
-                  ? "Number should be in format:-123-456-7890"
+                <input type="tel" id="number" class="square-div" formControlName="phoneNum1" maxlength=""
+                  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
+                <span *ngIf="
+                    regForm.get('Step2.phoneNum1').touched
+                  " class="help-block">{{
+                  regForm.get("Step2.phoneNum1")
+                  ? "Number should be in format(123-456-7890)"
                   : ""
                   }}
                   {{
-                  regForm.get("step2.phoneNum").hasError("pattern")
-                  ? "Number is Required"
+                  regForm.get("Step2.phoneNum1").hasError("required")
+                  ? "Phone Number is Required"
                   : ""
                   }}</span>
               </div>
@@ -115,27 +114,27 @@
               Back
             </button>
             <button mat-button matStepperNext class="btn btn-primary mx-3" type="button"
-              [disabled]="!regForm.get('step2').valid">
+              [disabled]="!regForm.get('Step2').valid">
               Next
             </button>
           </mat-step>
-          <mat-step label="Step 3">
-            <!-- <span *ngIf="
-                regForm.get('step3').touched &&
-                !regForm.get('step3').valid
-              " class="text-msg">Please fill All Details!</span> -->
-            <div id="user-data" formGroupName="step3">
+          <mat-step label="Step3">
+            <span *ngIf="
+                regForm.get('Step3').touched &&
+                !regForm.get('Step3').valid
+              " class="help-block">Please Enter All Values!</span>
+            <div id="user-data" formGroupName="Step3">
               <div class="form-group">
                 <label for="Qualification">Qualification</label>
                 <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="dropdownList"
                   formControlName="qualification">
                 </ng-multiselect-dropdown>
                 <span *ngIf="
-                    regForm.get('step3.qualification').touched &&
+                    regForm.get('Step3.qualification').touched &&
                     regForm
-                      .get('step3.qualification')
+                      .get('Step3.qualification')
                       .hasError('required')
-                  " class="text-msg">
+                  " class="help-block">
                   Please Select Qualification
                 </span>
               </div>
@@ -150,9 +149,9 @@
                   </option>
                 </select>
                 <span *ngIf="
-                    regForm.get('step3.profession').touched &&
-                    regForm.get('step3.profession').hasError('required')
-                  " class="text-msg">Please select profession
+                    regForm.get('Step3.profession').touched &&
+                    regForm.get('Step3.profession').hasError('required')
+                  " class="help-block">Please select profession
                 </span>
               </div>
               <div class="form-group">
@@ -160,11 +159,11 @@
                 <div>
                   <textarea class="form-control" rows="4" cols="40" formControlName="description"></textarea>
                   <span *ngIf="
-                      regForm.get('step3.description').touched &&
+                      regForm.get('Step3.description').touched &&
                       regForm
-                        .get('step3.description')
+                        .get('Step3.description')
                         .hasError('required')
-                    " class="text-msg">
+                    " class="help-block">
                     Description is required
                   </span>
                 </div>
@@ -176,37 +175,41 @@
                   <div>
                     <label for="name" class="mx-3">Name</label>
                     <input type="text" id="contactName" formControlName="name" placeholder="{{
-                        regForm.get('step3.contacts').hasError &&
-                        regForm.get('step3.contacts').touched
+                        regForm.get('Step3.contacts').hasError &&
+                        regForm.get('Step3.contacts').touched
                           ? 'name is required'
                           : ''
                       }}" />
-                    <!-- </div>
-                  <div> -->
+                  </div>
+                  <div>
                     <label for="phoneNumber" class="mx-3">Phone Number</label>
                     <input type="tel" id="contactNumber" formControlName="number" placeholder="{{
                         regForm
-                          .get('step3.contacts')
+                          .get('Step3.contacts')
                           .hasError('required') &&
-                        regForm.get('step3.contacts').touched
+                        regForm.get('Step3.contacts').touched
                           ? 'number is required'
                           : 'format:-123-456-7890'
                       }}" />
-                    <div>
-                      <button style="margin: -4px 0px 0px 8px" type="button" class="btn btn-danger"
-                        (click)="onRemoveContacts(i)" *ngIf="i >=1"> Remove </button>
-                      <button type="button" class="btn btn-info" (click)="onAddContacts()">Add One</button>
-                    </div>
+                  </div>
+                  <div *ngIf="i != 0">
+                    <button style="margin: -4px 0px 0px 8px" type="button" class="btn btn-danger"
+                      (click)="onRemoveContacts(i)">
+                      X
+                    </button>
                   </div>
                 </div>
-
+                <button type="button" class="btn btn-success my-2" (click)="onAddContacts()">
+                  Add New
+                </button>
               </div>
             </div>
             <div>
               <button mat-button matStepperPrevious class="btn btn-primary" type="button">
                 Back
               </button>
-              <button [disabled]="!regForm.valid" class="btn btn-primary" type="submit">
+              <button [disabled]="!regForm.valid" class="btn btn-primary mx-3 mat-button mat-dialog-close" type="submit"
+                (click)="onCloseDialog()">
                 {{ !editMode ? "Submit" : "update" }}
               </button>
             </div>
